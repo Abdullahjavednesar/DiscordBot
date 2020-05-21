@@ -1,0 +1,3 @@
+# DiscordBot
+
+A multifunctionality bot.
