@@ -1,6 +1,7 @@
 import discord
 import requests
 import re
+import os
 from bs4 import BeautifulSoup
 import sqlite3
 
@@ -61,4 +62,4 @@ class MyClient(discord.Client):
         
 
 client = MyClient()
-client.run('NzEyNTY3NzI2Mjc0NTEwODU5.XsTcdg.F3qvI5xfDl_IWE5kZQE3Dtm7zik')
+client.run(os.environ.get('TOKEN'))
