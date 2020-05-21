@@ -7,6 +7,10 @@ import sqlite3
 
 class MyClient(discord.Client):
     async def on_ready(self):
+        """
+        Asynchronous function to prepare database and print status when activated.
+        """
+
         db = sqlite3.connect('history.sqlite')
         cursor = db.cursor()
         cursor.execute('''
@@ -18,14 +22,25 @@ class MyClient(discord.Client):
         print('Bot online, logged on as', self.user)
 
     async def on_message(self, message):
+        """
+        Asynchronous function to chat with the active user.
+        """
+
         if message.author == self.user:
             return
+
+        # The bot returns 'hey' when the user enters 'hi'.
 
         if message.content == 'hi':
             await message.channel.send('hey')
 
         functionality_type = message.content[0:7]
         url_list = []
+
+        # To google users query or search phrase and return top five results provided.
+        # It also stores the user's id and the query phrase as search history.
+        #  To google via game bot user user has to enter '!google {search_phrase}'
+         
         if functionality_type == '!google':
             results = 5
             search = message.content.replace('!google ', '')
@@ -47,6 +62,10 @@ class MyClient(discord.Client):
         for url in url_list[0:5]:
             await message.channel.send(url)
         
+        # The user can retrive its recent history of a phrase.
+        # The history is persistent and stored in sqlite database.
+        # This is a partial search implementation.
+
         if functionality_type == '!recent':
             check_history = message.content.replace('!recent ', '')
             db = sqlite3.connect('history.sqlite')
